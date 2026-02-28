@@ -1,4 +1,6 @@
 window.addEventListener("load", function () {
+
+
   let countUser = this.document.querySelector(".count-user"),
     countComp = this.document.querySelector(".count-comp"),
     userField = this.document.querySelector(".user-field"),
@@ -7,9 +9,10 @@ window.addEventListener("load", function () {
     play = this.document.querySelector(".play"),
     fields = this.document.querySelectorAll(".field"),
     res = this.document.querySelector(".result"),
-    //вызов всех обьектов из HTML
+
     userStep,
     compStep,
+
     //записываем комбинации выбранные компьютором и пользователем
     countU = 0,
     countC = 0,
@@ -40,14 +43,14 @@ window.addEventListener("load", function () {
     blocked = true;
     //запускаем блокеровку выбора пока компьютор делает свой ход
     let rand = Math.floor(Math.random() * 5);
-    //запускаем рандомное число что бы компьютор сделал рандомный выбор из предложеных вариантов(* 3 потому что вариантов только три)
+    //запускаем рандомное число что бы компьютор сделал рандомный выбор из предложеных вариантов
     compField.classList.add("blink");
     //добавляем в заранее созданную переменную моргание
     let compFields = compField.querySelectorAll(".field");
     //создаем пременную  в которой будут все кнопки
 
     setTimeout(() => {
-      //фунция для задержки на 3 сек(тоесть он будет думать над своим вариантом в течении 3 сек)
+      //фунция для задержки на 3 сек(тоесть он будет думать над своим вариантом в течении 2 сек)
       compField.classList.remove("blink");
       //отключаем моргаение
       compStep = compFields[rand].dataset.field;
