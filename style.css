@@ -35,8 +35,6 @@ body {
   align-items: center;
   width: 80%;
 }
-/* 
-oben ist die logik allgemein */
 .center {
   display: flex;
   flex-direction: column;
@@ -46,9 +44,10 @@ oben ist die logik allgemein */
   margin: 20px;
   font-size: 40px;
   font-weight: bold;
-  background: linear-gradient(120deg, blue, orange, cyan);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-family: "Sour Gummy", sans-serif;
+  border: 2px solid black;
+  border-radius: 20px;
+  padding: 10px;
 }
 
 .counter-block {
@@ -85,13 +84,13 @@ oben ist die logik allgemein */
 }
 
 .count-user::before {
-  content: "Player!";
+  content: "Player";
   left: -5px;
   top: 100%;
 }
 
 .count-comp::before {
-  content: "Comp!";
+  content: "Comp";
   right: -5px;
   top: 100%;
 }
@@ -108,13 +107,12 @@ oben ist die logik allgemein */
   color: black;
 }
 .result {
-  border: 2px solid #b85c00;
   border-radius: 5px;
   font-size: 20px;
   font-weight: bold;
   color: black;
+  font-family: "Sour Gummy", sans-serif;
 }
-/* oben is die Logik Mittel,Counter */
 .comp-field,
 .user-field {
   display: flex;
@@ -163,14 +161,11 @@ oben ist die logik allgemein */
 .comp-field.blink {
   animation-play-state: paused;
 }
-
 @keyframes blink {
   100% {
     background-color: green;
   }
 }
-
-/* oben is die Logik Optionen */
 .play {
   font-size: 25px;
   text-align: center;
@@ -186,7 +181,6 @@ oben ist die logik allgemein */
   outline: none;
   background: linear-gradient(180deg, #00cb48, #126e01);
 }
-
 button:hover,
 button:active {
   box-shadow: 1px 1px 0 #0c4e00;
@@ -194,7 +188,6 @@ button:active {
 .field i {
   font-size: 2em;
 }
-/* oben is die Stil der Tasten */
 @media (max-width: 600px) {
   .allgame {
     flex-direction: column;

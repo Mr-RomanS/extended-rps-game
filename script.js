@@ -1,23 +1,24 @@
 window.addEventListener("load", function () {
 
 
-  let countUser = this.document.querySelector(".count-user"),
+  const countUser = this.document.querySelector(".count-user"),
     countComp = this.document.querySelector(".count-comp"),
     userField = this.document.querySelector(".user-field"),
     compField = this.document.querySelector(".comp-field"),
     sound = this.document.querySelector(".sound"),
     play = this.document.querySelector(".play"),
     fields = this.document.querySelectorAll(".field"),
-    res = this.document.querySelector(".result"),
+    res = this.document.querySelector(".result");
 
-    userStep,
-    compStep,
+    let userStep;
+    let compStep;
 
     //записываем комбинации выбранные компьютором и пользователем
-    countU = 0,
-    countC = 0,
+    let countU = 0;
+    let countC = 0;
     //счетчики для юзера и компьютера
-    blocked = false;
+
+    let blocked = false;
 
   function choiceUser(e) {
     if (blocked) return;
@@ -63,89 +64,44 @@ window.addEventListener("load", function () {
   }
   //функция для выбора комбинации компьютера
 
-  function winner() {
-    blocked = false;
-    //сново блокировка снята и пользователь может делать свой выбор
-    let comb = userStep + compStep;
-    //добавляем результат компьютора и пользователя что бы понимать какой это результат выиграшный ничейный или проиграшный(тоесть сумма выбранного)
-    switch (comb) {
-      //передаем результат сложение выбранного пользователем и компьютером
-      case "rockrock":
-      case "scissorsscissors":
-      case "paperpaper":
-      case "lizardlizard":
-      case "spockspock":
-        //варианты ничьей
-        res.innerText = "Draw!";
-        //выводим надпись что получилась ничья
-        sound.setAttribute("src", "audio/draw.mp3");
-        //добавляем музыку которая подходит для ничьей
-        sound.play();
-        //и включаем музыку(она вкуючиться только когда будет ничья)
-        break;
-      //прерываем процесс что бы остральной код не выполнялся
-      case "scissorspaper":
-      case "scissorslizard":
-      case "paperrock":
-      case "paperspock":
-      case "rockscissors":
-      case "rocklizard":
-      case "lizardpaper":
-      case "lizardspock":
-      case "spockrock":
-      case "spockscissors":
-        //варианты моего выиграша
-        res.innerText = "You Win!";
-        //вывводим текст с победой
-        sound.setAttribute("src", "audio/win.mp3");
-        //добавляем музыку
-        sound.play();
-        //включаем музыку при победе
-        countU++;
-        //добавляем в счетчик побед на +1
-        countUser.innerText = countU;
-        //добавляем результат на экран
-        compField
-          .querySelector("[data-field=" + compStep + "]")
-          //здесь я достаю вариан компьютора через обращение селектора в котором занчение равно тому что храниться в переменной compStep
-          .classList.add("error");
-        //достаем именно тот вариант который выбрал компьютор и добавляем включение проиграшной подстветки
+const GAME_RULES = {
+  rock: ["scissors", "lizard"],
+  paper: ["rock", "spock"],
+  scissors: ["paper", "lizard"],
+  lizard: ["spock", "paper"],
+  spock: ["scissors", "rock"]
+};
 
-        break;
-      //прерываем остальной код
-      case "scissorsrock":
-      case "scissorsspock":
-      case "paperlizard":
-      case "paperscissors":
-      case "rockpaper":
-      case "rockspock":
-      case "lizardrock":
-      case "lizardscissors":
-      case "spockpaper":
-      case "spocklizard":
-        //варианты выиграша компьютора
-        res.innerText = "You Loss!";
-        //вывводим текст с проиграшем
-        sound.setAttribute("src", "audio/loss.mp3");
-        //добавляем музыку
-        sound.play();
-        //включаем музыку при проиграша
-        countC++;
-        //добавляем в счетчик побед на +1 компьютору
-        countComp.innerText = countC;
-        //добавляем результат на экран со стороны компьютора
-        userField
-          .querySelector("[data-field=" + userStep + "]")
-          //здесь я достаю свой вариант через обращение селектора в котором занчение равно тому что храниться в переменной userStep
-          .classList.add("error");
-        //достаем именно тот вариант который выбрал пользователь и добавляем включение проиграшной подстветки
+function winner() {
+  blocked = false;
 
-        break;
-      //прерываем остальной код
-    }
+  if (userStep === compStep) {
+    updateUI("Draw!", "draw");
+  } else if (GAME_RULES[userStep].includes(compStep)) {
+    // Юзер победил
+    countU++;
+    countUser.innerText = countU;
+    updateUI("You Win!", "win");
+    // Подсвечиваем ошибку у компьютера
+    compField.querySelector(`[data-field="${compStep}"]`).classList.add("error");
+  } else {
+    // Компьютер победил
+    countC++;
+    countComp.innerText = countC;
+    updateUI("You Loss!", "loss");
+    // Подсвечиваем ошибку у пользователя
+    userField.querySelector(`[data-field="${userStep}"]`).classList.add("error");
   }
+}
   //функция для определения победителя на текщий момент
 
+
+  // Вспомогательная функция, чтобы не дублировать код звуков и текста
+function updateUI(message, soundType) {
+  res.innerText = message;
+  sound.setAttribute("src", `audio/${soundType}.mp3`);
+  sound.play();
+}
   function playGame() {
     countU = countC = 0;
     //обнуление переменных в которые добавлялись результаты игры
